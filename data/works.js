@@ -41,15 +41,19 @@ window.WORKS = [
     flag: '在线可玩'
   },
   {
-    title: '下一个作品',
-    desc: '位置先留着。想好做什么就填进来 —— 改 data/works.js，把这段换成真实作品即可。',
-    tags: ['待补'],
-    year: '—',
-    status: 'soon'
+    title: '雨中的小海豹',
+    desc: '一只趴在雨里的小海豹。纯手写 Canvas 场景：钢笔淡彩的质感、下不完的雨，拖一下还能绕着它转圈看。',
+    tags: ['Canvas 2D', '钢笔淡彩', '单文件'],
+    year: '2026',
+    status: 'live',
+    href: 'https://sherry-mc.github.io/rain-seal/',
+    shot: 'assets/shots/rain-seal.jpg',
+    alt: '雨中小海豹：一只白色小海豹趴在积水的方块上，天上在下雨，底部有一排配色按钮',
+    flag: '在线可玩'
   },
   {
-    title: '再下一个',
-    desc: '同样是个空位。占位卡不会出现在线上导航里，只是提醒这里还有空间。',
+    title: '下一个作品',
+    desc: '位置先留着。想好做什么就填进来 —— 改 data/works.js，把这段换成真实作品即可。',
     tags: ['待补'],
     year: '—',
     status: 'soon'
