@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Sherry-mc ｜ 把想法做成能点开的东西</title>
+<meta name="description" content="Sherry-mc 的个人网站：手写的网页作品，不装框架、不要构建，点开就是全部。">
+<meta name="theme-color" content="#0A0A0B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sherry-mc ｜ 把想法做成能点开的东西">
+<meta property="og:description" content="手写的网页作品：池核 POOLCORE、合成大西瓜……点开就能用。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0A0B'/%3E%3Ctext x='16' y='22.5' font-family='Helvetica,Arial' font-size='17' font-weight='700' fill='%23D6FF4B' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css?v=20261029a">
+</head>
+<body>
+
+<a class="skip" href="#works">跳到作品</a>
+
+<header class="site-head" id="siteHead">
+  <div class="wrap head-inner">
+    <a class="brand" href="#top"><span class="brand-mark"></span>Sherry-mc</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#works">作品</a>
+      <a href="#about">关于</a>
+      <a href="#contact">联系</a>
+      <a class="nav-ext" href="https://github.com/Sherry-mc" target="_blank" rel="noopener noreferrer">GitHub<svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= 首屏 ================= -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow"><span class="mono">PORTFOLIO</span><span class="bar"></span>2026</p>
+      <h1 class="hero-title">把想法做成<br><em>能点开</em>的东西。</h1>
+      <p class="lede">我是 Sherry。喜欢那种「打开就能用」的网页 —— 不用安装、不用登录、也不用等它加载。这里放我自己写的东西，每一件都是纯手写的 HTML / CSS / JavaScript。</p>
+      <div class="hero-actions">
+        <a class="btn" href="#works">看作品<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></a>
+        <a class="btn btn-ghost" href="https://github.com/Sherry-mc" target="_blank" rel="noopener noreferrer">GitHub<svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></a>
+      </div>
+      <dl class="hero-meta">
+        <div><dt>方向</dt><dd>前端 · 交互 · 生成视觉</dd></div>
+        <div><dt>工具</dt><dd>原生 JS · Canvas · Web Audio</dd></div>
+        <div><dt>状态</dt><dd><i class="dot" aria-hidden="true"></i>持续在写</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= 作品 ================= -->
+  <section class="works" id="works">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title">作品<span class="sec-en mono">SELECTED WORKS</span></h2>
+        <p class="sec-note">
+          没有框架、没有构建步骤，也没有一张外部图片。<br>
+          下面每一件都可以直接点开用。
+        </p>
+      </div>
+      <div class="grid" id="workGrid"></div>
+    </div>
+  </section>
+
+  <!-- ================= 关于 ================= -->
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-main">
+        <h2 class="sec-title">关于<span class="sec-en mono">ABOUT</span></h2>
+        <p>我更在意「用起来是什么感觉」，而不是用了什么技术。所以这里的作品大多没有依赖：一个 HTML 文件，双击就能跑，断网也能用。</p>
+        <p>做页面的时候我会先想清楚三件事：第一眼看到什么、手指落下去会发生什么、以及关掉之后还记得什么。剩下的时间基本都在调那些说不清但一眼能看出来的细节 —— 间距、速度、颜色深浅。</p>
+        <p class="about-tip">这个站点本身也是手写的：一个 HTML、一个 CSS、两个 JS，一共不到 800 行。</p>
+      </div>
+      <aside class="about-side">
+        <div class="panel">
+          <h3>在做的事</h3>
+          <ul class="ticks">
+            <li>把真实世界的质感搬进浏览器：水、光、瓷砖</li>
+            <li>用 Canvas 逐像素画，不借助任何贴图</li>
+            <li>让物理和动画的手感更接近真实</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>常用</h3>
+          <ul class="chips">
+            <li>HTML</li><li>CSS</li><li>JavaScript</li><li>Canvas 2D</li>
+            <li>Web Audio</li><li>Matter.js</li><li>响应式</li><li>可访问性</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= 联系 ================= -->
+  <section class="contact" id="contact">
+    <div class="wrap contact-inner">
+      <h2 class="sec-title">联系<span class="sec-en mono">CONTACT</span></h2>
+      <p class="contact-lede">想聊网页、想让我做点什么，或者只是想说声「这个挺好玩」—— 都可以写信给我。</p>
+
+      <div class="contact-actions">
+        <!-- 待填：把下面的邮箱换成你自己的 -->
+        <a class="btn" href="mailto:your@email.com">your@email.com<svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></a>
+        <a class="btn btn-ghost" href="https://github.com/Sherry-mc" target="_blank" rel="noopener noreferrer">github.com/Sherry-mc<svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <p>© <span id="year">2026</span> Sherry-mc</p>
+    <p class="foot-note">手写 HTML / CSS / JS · 无框架 · 无外部依赖</p>
+    <a href="#top" class="to-top">回到顶部<svg class="ico" aria-hidden="true"><use href="#i-up"/></svg></a>
+  </div>
+</footer>
+
+<!-- 图标精灵 -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-8.5 8.5"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5.5 12.5L12 19l6.5-6.5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M5.5 11.5L12 5l6.5 6.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<script src="data/works.js?v=20261029a"></script>
+<script src="js/main.js?v=20261029a"></script>
+</body>
+</html>
