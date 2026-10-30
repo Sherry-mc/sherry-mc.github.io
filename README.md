@@ -57,5 +57,5 @@ git add -A && git commit -m "更新作品" && git push
 
 ## 待改
 
-- 联系邮箱目前是占位的 `your@email.com`（`index.html` 里搜 `mailto:` 改掉）。
 - 首屏和「关于」的自我介绍是按占位写的，随时可以换成自己的话。
+- 联系邮箱：`3981292753@qq.com`（改的话在 `index.html` 里搜 `mailto:`）。
