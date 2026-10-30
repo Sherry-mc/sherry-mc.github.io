@@ -46,7 +46,7 @@ window.WORKS = [
     tags: ['互动叙事', '声音设计', '单页'],
     year: '2026',
     status: 'live',
-    href: 'https://sherry-mc.github.io/narcolepsy/',
+    href: 'https://sherry-mc.github.io/one-day/one-day.html',
     shot: 'assets/shots/narcolepsy.jpg',
     alt: '「TA 的普通一天」第三章：数学课上，两个选项「全班安静。」与「你没绷住，笑了」',
     flag: '在线可玩'
