@@ -155,13 +155,6 @@ li { list-style: none; }
   filter: blur(10px);
   pointer-events: none;
 }
-.hero-glow::after {
-  content: "";
-  position: absolute;
-  width: 520px; height: 520px;
-  left: -420px; bottom: -80px;
-  background: radial-gradient(circle at 50% 50%, rgba(110, 220, 255, 0.10), transparent 65%);
-}
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 12px;
@@ -500,6 +493,8 @@ li { list-style: none; }
   .nav a[href="#about"] { display: none; }
   .nav-ext { padding: 6px 10px; }
   .hero { padding-top: clamp(96px, 16vh, 140px); }
+  /* 窄屏那块光晕会糊住整个页头，压淡一点 */
+  .hero-glow { opacity: 0.55; right: -360px; top: -360px; }
   .sec-head { gap: 14px; }
   .btn { padding: 12px 18px; font-size: 0.9rem; }
   .card-body { padding: 18px; }

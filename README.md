@@ -1,4 +1,4 @@
-# Sherry-mc · 个人网站
+# Sherry｜筛粒 · 个人网站
 
 手写静态站：一个 HTML、一个 CSS、两个 JS，零外部依赖（系统字体、SVG sprite、本地封面图）。
 线上地址：<https://sherry-mc.github.io/>
@@ -57,5 +57,5 @@ git add -A && git commit -m "更新作品" && git push
 
 ## 待改
 
-- 首屏和「关于」的自我介绍是按占位写的，随时可以换成自己的话。
 - 联系邮箱：`3981292753@qq.com`（改的话在 `index.html` 里搜 `mailto:`）。
+- 自我介绍：见 `index.html` 首屏 `.lede` 与「关于」第一段。
