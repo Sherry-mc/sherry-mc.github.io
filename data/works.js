@@ -41,6 +41,17 @@ window.WORKS = [
     flag: '在线可玩'
   },
   {
+    title: 'TA 的普通一天',
+    desc: '发作性睡病的互动体验：你是 TA，一名普通高中生，从早自习过到晚自习。每个岔口都要做选择，中间还藏着一段 30 秒的「鬼压床」。',
+    tags: ['互动叙事', '声音设计', '单页'],
+    year: '2026',
+    status: 'live',
+    href: 'https://sherry-mc.github.io/narcolepsy/',
+    shot: 'assets/shots/narcolepsy.jpg',
+    alt: '「TA 的普通一天」第三章：数学课上，两个选项「全班安静。」与「你没绷住，笑了」',
+    flag: '在线可玩'
+  },
+  {
     title: '雨中的小海豹',
     desc: '一只趴在雨里的小海豹。纯手写 Canvas 场景：钢笔淡彩的质感、下不完的雨，拖一下还能绕着它转圈看。',
     tags: ['Canvas 2D', '钢笔淡彩', '单文件'],

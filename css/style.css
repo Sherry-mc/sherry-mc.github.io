@@ -369,6 +369,10 @@ li { list-style: none; }
    左右两端（编号 / 待补）就贴在一起了 */
 .card.is-soon .card-body { justify-content: center; gap: 8px; }
 .card.is-soon .card-media { border-bottom-style: dashed; border-bottom-color: rgba(243, 240, 234, 0.16); }
+/* 作品数为奇数时，最后那张占位卡横跨两列（main.js 会挂上 is-wide），
+   免得单开半行、右边空一大块 */
+.card.is-wide { grid-column: 1 / -1; }
+.card.is-wide .card-media { aspect-ratio: 21 / 4; }
 .soon-mark {
   display: flex; align-items: center; justify-content: center;
   flex-direction: column; gap: 10px;

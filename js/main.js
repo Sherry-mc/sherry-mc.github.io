@@ -125,6 +125,11 @@
       frag.appendChild(work.status === 'live' ? liveCard(work, i) : soonCard(work, i));
     });
     grid.appendChild(frag);
+    /* 作品数是奇数、最后一张又是占位卡：让它横跨两列，版面才不豁一块 */
+    var last = grid.lastElementChild;
+    if (list.length % 2 === 1 && last && last.classList.contains('is-soon')) {
+      last.classList.add('is-wide');
+    }
   }
 
   /* ---------------- 滚动显现 ---------------- */

@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TA 的普通一天 — 发作性睡病</title>
+<style>
+:root{
+  --ink:#3A3234; --dim:#7E7274; --faint:#B5AAAC;
+  --paper:#FFF9F4; --card:#FFFFFF; --line:#F2E2DA;
+  --warm:#FF9A9E; --warm-d:#D96570; --warm-bg:#FFF0ED;
+  --night:#1C1723; --night-ink:#EDE6E9; --night-dim:#9A8FA0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.9;font-size:17px}
+#page{transition:transform 1.2s cubic-bezier(.45,0,.25,1),filter 1.2s ease}
+#page.quake{animation:quake .55s linear}
+@keyframes quake{
+  0%,100%{transform:translate(0,0) rotate(0)}
+  10%{transform:translate(-10px,4px) rotate(-.8deg)}
+  22%{transform:translate(9px,-6px) rotate(.9deg)}
+  34%{transform:translate(-8px,-4px) rotate(-.6deg)}
+  46%{transform:translate(8px,5px) rotate(.7deg)}
+  58%{transform:translate(-6px,3px) rotate(-.5deg)}
+  72%{transform:translate(4px,-2px) rotate(.35deg)}
+  86%{transform:translate(-2px,1px) rotate(-.2deg)}
+}
+.crack{position:fixed;width:12px;z-index:9996;pointer-events:none;transform-origin:top center;
+  transition:opacity .45s ease}
+.crack.fade{opacity:0}
+.crack svg{display:block;width:100%;height:100%;overflow:visible}
+.crack svg path{stroke-dasharray:100;stroke-dashoffset:100;animation:crackline .3s ease-out forwards}
+@keyframes crackline{to{stroke-dashoffset:0}}
+.scene.split{transition:transform .95s cubic-bezier(.55,0,.75,0),opacity .85s ease .3s;will-change:transform}
+.scene.split.go.splitL{transform:translate(-54px,32px) rotate(-5.5deg);opacity:.45}
+.scene.split.go.splitR{transform:translate(54px,32px) rotate(5.5deg);opacity:.45}
+#page.stutter{animation:stut .5s steps(2) 1}
+@keyframes stut{0%,100%{transform:none}25%{transform:translate(-4px,1px)}
+  55%{transform:translate(3px,-1px)}80%{transform:translate(-2px,0)}}
+
+.ch{display:none;min-height:100svh;max-width:560px;margin:0 auto;
+  padding:max(56px,env(safe-area-inset-top)) 24px calc(48px + env(safe-area-inset-bottom));
+  flex-direction:column;justify-content:center}
+.ch.on{display:flex;animation:fadein .7s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.ch.dark{background:var(--night);color:var(--night-ink)}
+.ch.dark .sub,.ch.dark .note{color:var(--night-dim)}
+.ch.dark .btn{background:#2E2637;border-color:#443A4F;color:var(--night-ink)}
+.ch.dark .btn.primary{background:var(--warm);border-color:var(--warm);color:#421A20}
+
+.time{font-size:13px;letter-spacing:.24em;color:var(--warm-d);font-weight:600;margin-bottom:8px}
+.ch.dark .time{color:var(--warm)}
+h2{font-size:25px;font-weight:600;line-height:1.5;margin:0 0 14px}
+p{margin:0 0 12px}
+.sub{color:var(--dim);font-size:15px}
+.note{color:var(--faint);font-size:13px;line-height:1.8;margin-top:14px}
+.note b{color:var(--dim);font-weight:500}
+
+.btn{display:block;width:100%;text-align:center;font-family:inherit;font-size:16.5px;
+  padding:14px 18px;margin-top:12px;border-radius:14px;cursor:pointer;
+  background:var(--card);border:1.5px solid var(--line);color:var(--ink);
+  transition:transform .15s ease,opacity .3s ease;min-height:48px}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--warm-bg);border-color:var(--warm);color:#8A3A44}
+.btn[disabled]{opacity:.45;cursor:default}
+.two{display:flex;gap:12px}
+.two .btn{margin-top:12px}
+
+.scene{border-radius:18px;padding:22px 20px;margin:16px 0;background:var(--card);
+  border:1px solid var(--line);min-height:120px}
+.scene.lit{background:linear-gradient(160deg,#FFF6EA,#FFEDE6);
+  transition:background .35s ease}
+.scene.darkscene{background:#141019;border-color:#2C2438;color:var(--night-dim)}
+.scene .inner{font-size:15px;color:var(--dim);text-align:center;
+  min-height:60px;display:flex;align-items:center;justify-content:center;line-height:2}
+
+/* 1:1 媒体框：可放视频，也可只放文字 */
+.scene.square{position:relative;width:min(100%,46svh);aspect-ratio:1/1;
+  margin:16px auto;padding:0;display:flex;align-items:center;justify-content:center;
+  overflow:hidden}
+.sceneVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  display:none;background:#120E14}
+.scene.hasvid .sceneVid{display:block}
+.scene.hasvid .pov{display:none}
+
+/* 纯 CSS 的第一视角天花板 + 眼缝开合（没有视频时用这套） */
+.pov{position:absolute;inset:0;overflow:hidden;background:#08060A}
+.eye{position:absolute;inset:-5%;
+  filter:blur(20px) brightness(.26);
+  clip-path:ellipse(82% 1.5% at 50% 46%);
+  transition:filter 1.15s ease,clip-path 1.15s cubic-bezier(.38,0,.55,1)}
+/* 卧室：暖白顶面 + 圆形吸顶灯 + 窗帘漏进来的晨光（比教室矮、比教室暖） */
+.ceil{position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 40% 28% at 52% 17%,rgba(255,238,206,.34),rgba(255,238,206,0) 76%),
+    linear-gradient(178deg,#F7F0E7 0%,#EFE4D8 48%,#DFD2C4 66%,#DFD2C4 100%)}
+.wall{position:absolute;left:-10%;right:-10%;top:64%;bottom:-8%;
+  background:linear-gradient(180deg,#D8C0B9 0%,#B79B95 100%)}
+/* 窗帘没拉严：左侧一条晨光，顺着墙一直漫到天花板边缘 */
+.window{position:absolute;left:-14%;top:-4%;bottom:-6%;width:34%;
+  background:linear-gradient(90deg,rgba(255,253,244,.96) 0%,rgba(255,248,226,.58) 34%,
+    rgba(255,246,220,.14) 62%,rgba(255,246,220,0) 100%);
+  filter:blur(10px)}
+.curtain{position:absolute;left:-14%;top:-4%;bottom:-6%;width:31%;
+  background:repeating-linear-gradient(94deg,rgba(255,255,255,.55) 0 5%,
+    rgba(150,126,116,.30) 5% 9%,rgba(255,252,244,.28) 9% 15%,
+    rgba(164,140,128,.24) 15% 20%);
+  filter:blur(5px);opacity:.85}
+/* 圆形吸顶灯（不是教室的长条灯管） */
+.lamp{position:absolute;left:52%;top:21%;width:27%;aspect-ratio:1/1;
+  transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,#FFFDF8 0%,#FFF1D8 46%,#F3DBB4 76%,#E2C69C 100%);
+  box-shadow:
+    0 0 24px 8px rgba(255,228,182,.40),
+    0 0 56px 24px rgba(255,214,160,.20),
+    inset 0 0 0 1.5px rgba(190,158,122,.55),
+    inset 0 -5px 13px rgba(190,154,114,.30)}
+.lamp::after{content:'';position:absolute;inset:13%;border-radius:50%;
+  background:radial-gradient(circle at 50% 46%,#FFFEFB 0%,rgba(255,251,238,.5) 66%,rgba(255,246,226,0) 100%)}
+/* 灯座：贴顶的那一圈浅影，让它像"装在天花板上"而不是"浮着" */
+.lamp::before{content:'';position:absolute;left:50%;top:-10%;width:30%;aspect-ratio:1/1;
+  transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(168,140,112,.26),rgba(168,140,112,0) 70%)}
+.seamh{position:absolute;left:-10%;right:-10%;top:64%;height:3px;
+  background:linear-gradient(180deg,rgba(96,76,64,.34),rgba(255,252,246,.62));
+  box-shadow:0 10px 26px rgba(96,76,60,.26),0 -4px 10px rgba(255,255,255,.35)}
+.seamv{position:absolute;left:88%;top:-6%;bottom:0;width:2px;
+  background:linear-gradient(90deg,rgba(110,90,78,.20),rgba(255,252,246,.30));
+  transform:rotate(-4deg);transform-origin:top}
+.grain{position:absolute;inset:0;opacity:.35;
+  background-image:repeating-linear-gradient(0deg,rgba(120,105,92,.045) 0 1px,transparent 1px 5px)}
+.vig{position:absolute;inset:0;
+  background:radial-gradient(ellipse 68% 52% at 50% 48%,transparent 62%,rgba(12,8,9,.84) 100%)}
+.scene.square .inner{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:5;
+  min-height:0;font-size:13px;color:#fff;background:rgba(18,12,16,.55);
+  padding:6px 14px;border-radius:14px;white-space:nowrap;line-height:1.6}
+
+.passage{opacity:0;margin:14px 0;padding:18px 20px;border-left:3px solid var(--warm);
+  background:var(--card);border-radius:0 14px 14px 0;font-size:16px;line-height:2.2;color:var(--ink)}
+.passage.show{opacity:1;transition:opacity .6s ease}
+/* 字一个一个掉出去，直到彻底空白 */
+.passage .c{opacity:1;transition:opacity .34s linear}
+.passage .c.gone{opacity:0}
+.passage.blank{border-left-color:transparent;background:transparent;
+  transition:background .6s ease,border-color .6s ease}
+
+/* 全屏眼睑：闭眼 → 整页黑几秒 → 睁眼（只用在早读那一幕） */
+#lids{position:fixed;inset:0;z-index:9992;pointer-events:none}
+/* 底衬：两层眼睑靠拢后盖住边角，避免圆弧在四角漏光 */
+#lids::before{content:'';position:absolute;inset:0;background:#07050A;opacity:0;
+  transition:opacity .2s ease}
+#lids.closed::before{opacity:1;transition:opacity .2s ease .5s}
+#lids .lid{position:absolute;left:-2%;right:-2%;height:56%;background:#07050A;
+  transition:transform .8s cubic-bezier(.42,0,.28,1);will-change:transform}
+#lids .lidTop{top:-2%;border-radius:0 0 44% 44%/0 0 9% 9%;
+  transform:translateY(-103%)}
+#lids .lidBot{bottom:-2%;border-radius:44% 44% 0 0/9% 9% 0 0;
+  transform:translateY(103%)}
+#lids .lidTop::after,#lids .lidBot::after{content:'';position:absolute;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,transparent,rgba(255,206,190,.10),transparent);
+  transition:opacity .3s ease}
+#lids .lidTop::after{bottom:0}
+#lids .lidBot::after{top:0}
+#lids.closed .lidTop::after,#lids.closed .lidBot::after{opacity:0;transition:opacity .3s ease .45s}
+#lids.closed .lidTop,#lids.closed .lidBot{transform:translateY(0)}
+#lids.closed{pointer-events:all}
+/* 闭着眼时，眼皮内侧透出来的一点暗红（画在两层眼睑之上） */
+#lids::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s ease;
+  background:radial-gradient(ellipse 62% 46% at 50% 46%,rgba(96,42,40,.30),rgba(96,42,40,0) 72%)}
+#lids.closed::after{opacity:1}
+
+.joke{font-size:18px;line-height:2.1;padding:20px 22px}
+.joke b{color:var(--warm-d);font-weight:500}
+
+.ta{width:100%;font-family:inherit;font-size:17px;padding:14px 16px;margin:12px 0;
+  border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  min-height:96px;resize:none;line-height:1.8;overflow:hidden}
+.ta:focus{outline:none;border-color:var(--warm)}
+
+.cmp{margin:14px 0;font-size:14.5px}
+.cmp .row{margin-bottom:10px}
+.cmp .lab{font-size:12.5px;color:var(--faint);letter-spacing:.08em;margin-bottom:3px}
+.cmp .val{padding:10px 14px;border-radius:10px;background:var(--card);
+  border:1px solid var(--line);line-height:1.9}
+.cmp .val .ghost{color:#C2484F;border:1.5px dashed #E09A9E;border-radius:6px;padding:0 6px;margin:0 2px;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ta.flash{animation:taFlash 1.15s ease 2}
+@keyframes taFlash{0%,100%{border-color:var(--line);box-shadow:none}
+  50%{border-color:#E09A9E;box-shadow:0 0 0 4px rgba(224,154,158,.16)}}
+
+.sleepbar{display:flex;gap:4px;margin:20px 0 10px;height:34px}
+.sleepbar i{flex:1;border-radius:6px;background:#2B2438;opacity:.55;
+  transition:background .55s ease,opacity .55s ease}
+.sleepbar i.deep.on{background:var(--warm);opacity:.9}
+.sleepbar i.wake.on{background:#5B4E70;opacity:.95}
+.sleeplab{font-size:12.5px;color:var(--night-dim);letter-spacing:.1em;text-align:center}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.stat{background:#241D2E;border:1px solid #3A3148;border-radius:14px;padding:14px 14px 10px}
+.stat b{display:block;font-size:21px;font-weight:600;color:var(--warm)}
+.stat span{font-size:12.5px;color:var(--night-dim);line-height:1.6;display:block;margin-top:2px}
+
+#skip{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);right:14px;z-index:60;
+  font-family:inherit;font-size:12.5px;color:var(--dim);background:rgba(255,255,255,.78);
+  border:1px solid var(--line);border-radius:16px;padding:7px 14px;cursor:pointer;
+  backdrop-filter:blur(4px)}
+#veil{position:fixed;inset:0;background:#0B0810;opacity:0;pointer-events:none;
+  transition:opacity .3s ease;z-index:9990}
+#veil.half{opacity:.42}
+#veil.quarter{opacity:.26}
+#veil.full{opacity:1;transition:opacity .1s linear}
+.src{font-size:12px;color:var(--faint);margin-top:22px;line-height:1.8}
+@media (prefers-reduced-motion:reduce){
+  #page{transition:none}
+  #page.quake{animation:none}
+  #page.stutter{animation:none}
+  .eye{transition-duration:.16s}
+  #lids .lid{transition-duration:.18s}
+  .passage .c{transition:none}
+  .ch.on{animation:none}
+}
+</style>
+</head>
+<body>
+<main id="page">
+
+  <!-- 00 开场 -->
+  <section class="ch on" id="c0">
+    <p class="time">发作性睡病 · 互动体验</p>
+    <h2>TA 的普通一天</h2>
+    <p>接下来的几分钟，<b>你是 TA</b> —— 一名普通高中生。</p>
+    <p class="sub">今天也是个普通的日子。</p>
+    <p class="note">剧情里有几段是<b>模拟体验</b>，随时可以从右上角跳过。建议戴耳机，找个安静的地方。</p>
+    <button class="btn primary" id="startBtn">开始这一天</button>
+  </section>
+
+  <!-- 01 起床 -->
+  <section class="ch" id="c1">
+    <p class="time">06:50 · 周四</p>
+    <h2>醒</h2>
+    <p>闹钟第三遍了。你知道自己醒了——大概。</p>
+    <div class="scene square" id="room">
+      <video id="wakeVid" class="sceneVid" muted playsinline loop preload="auto" aria-hidden="true"></video>
+      <div class="pov" id="pov">
+        <div class="eye" id="eye">
+          <div class="ceil">
+            <div class="wall"></div>
+            <div class="window"></div>
+            <div class="curtain"></div>
+            <div class="seamh"></div>
+            <div class="lamp"></div>
+            <div class="seamv"></div>
+            <div class="grain"></div>
+          </div>
+          <div class="vig"></div>
+        </div>
+      </div>
+      <div class="inner" id="roomTxt">（闭着眼）</div>
+    </div>
+    <button class="btn" id="wakeBtn">睁眼</button>
+    <p class="note" id="wakeDone" hidden>光「醒来」这一件事，就试了三次。<br><b>反复的假醒、醒了又睡回去、醒着却动不了</b>——这是很多患者的每个清晨。</p>
+    <button class="btn primary next" id="next1" hidden>洗漱，出门</button>
+  </section>
+
+  <!-- 02 早读 -->
+  <section class="ch" id="c2">
+    <p class="time">07:30 · 早读</p>
+    <h2>读</h2>
+    <p>语文早读。下面这段你初二就背过，读一遍（心里读也行）：</p>
+    <div class="passage" id="passage">盼望着，盼望着，东风来了，春天的脚步近了。桃树、杏树、梨树，你不让我，我不让你，都开满了花赶趟儿。</div>
+    <button class="btn" id="readBtn">开始读</button>
+    <div id="q2" hidden>
+      <p style="margin-top:18px"><b>刚才课文消失的那几秒，你还在读吗？</b></p>
+      <div class="two">
+        <button class="btn" id="q2a">在读啊</button>
+        <button class="btn" id="q2b">……不记得</button>
+      </div>
+      <p class="note" id="q2note" hidden></p>
+      <button class="btn primary next" id="next2" hidden>第一节课，下了</button>
+    </div>
+  </section>
+
+  <!-- 03 数学课 -->
+  <section class="ch" id="c3">
+    <p class="time">10:05 · 第三节 · 数学</p>
+    <h2>笑</h2>
+    <p id="jokeSetup">老师把辅助线画错了半厘米，画完自己盯着看了两秒。</p>
+    <div class="scene joke" id="jokeBox"><div class="inner" id="jokeTxt" style="font-size:17px;color:var(--ink)">全班安静。</div></div>
+    <button class="btn" id="laughBtn">你没绷住，笑了</button>
+    <p class="note" id="catDone" hidden>引发这次发作的<b>不是害怕，是大笑</b>。这叫<b>猝倒</b>：情绪一激动，全身肌肉的张力说没就没。大笑、愤怒、激动，都是开关。</p>
+    <button class="btn primary next" id="next3" hidden>熬到午饭</button>
+  </section>
+
+  <!-- 04 午休 -->
+  <section class="ch" id="c4">
+    <p class="time">12:40 · 午休</p>
+    <h2>趴</h2>
+    <p>趴在课桌上，闭眼。</p>
+    <p>有时候一闭上眼，梦<b>立刻</b>就开始——而且你知道自己动不了，喊不出来。</p>
+    <p class="sub">这 30 秒有一个单独做好的完整体验：</p>
+    <a class="btn primary" href="sleep-paralysis.html" style="text-decoration:none">体验「鬼压床」30 秒</a>
+    <button class="btn next" id="next4">跳过，继续这一天</button>
+    <p class="note">看完记得回来，这一天还没结束。</p>
+  </section>
+
+  <!-- 05 自习 -->
+  <section class="ch" id="c5">
+    <p class="time">15:30 · 自习课</p>
+    <h2>抄</h2>
+    <p>历史作业。把这句<b>原样</b>打进框里：</p>
+    <p style="padding:12px 16px;background:var(--card);border-left:3px solid var(--warm);border-radius:0 12px 12px 0;font-size:16px">1840 年鸦片战争，打开了中国近代史的大门。</p>
+    <textarea class="ta" id="copyTa" rows="2" placeholder="在这里照着打一遍"></textarea>
+    <div class="cmp" id="cmp5" hidden>
+      <div class="row"><div class="lab">你记得自己打的</div><div class="val" id="cmpA"></div></div>
+      <div class="row"><div class="lab">本子上多出来的</div><div class="val" id="cmpB"></div></div>
+      <p class="note" id="cmpNote"></p>
+      <button class="btn primary next" id="next5" hidden>收拾书包</button>
+    </div>
+  </section>
+
+  <!-- 06 放学 -->
+  <section class="ch" id="c6">
+    <p class="time">17:50 · 校门口</p>
+    <h2>回</h2>
+    <p>放学。手机上你妈发来消息：<b>自己骑车回来。</b></p>
+    <div id="choice6">
+      <div class="two">
+        <button class="btn" id="rideBtn">骑车</button>
+        <button class="btn" id="walkBtn">推着走</button>
+      </div>
+    </div>
+    <p class="note" id="rideDone" hidden></p>
+    <button class="btn primary next" id="next6" hidden>晚饭，作业，到点躺下</button>
+  </section>
+
+  <!-- 07 夜里 -->
+  <section class="ch dark" id="c7">
+    <p class="time" id="nightTime">23:30</p>
+    <h2>睡</h2>
+    <p id="nightSay">你躺下了。9 个小时后闹钟才会响。</p>
+    <div class="sleepbar" id="sleepbar"></div>
+    <p class="sleeplab" id="sleepLab">还没有一段睡着</p>
+    <button class="btn" id="sleepBtn">好困啊，去睡觉</button>
+    <div id="nightEnd" hidden>
+      <p style="margin-top:20px">你比谁都睡得久，却像没睡过。</p>
+      <p class="sub">因为夜里的深睡眠，是碎的。<b style="color:var(--night-ink)">白天断电，是因为晚上没充上电。</b></p>
+      <button class="btn primary next" id="next7">天亮了</button>
+    </div>
+  </section>
+
+  <!-- 08 收尾 -->
+  <section class="ch dark" id="c8">
+    <p class="time">这一天过完了</p>
+    <h2>它普通吗？</h2>
+    <p class="sub">对 TA 来说，这是每天都发生的普通一天。而绝大多数 TA，还没被确诊。</p>
+    <div class="stats">
+      <div class="stat"><b>70–90 万</b><span>中国的患者估算人数</span></div>
+      <div class="stat"><b>&lt;10%</b><span>被确诊的比例</span></div>
+      <div class="stat"><b>8–22 年</b><span>平均确诊延迟——先被叫作「懒」了很多年</span></div>
+      <div class="stat"><b>8–15 岁</b><span>发病高峰。可能就坐在你旁边</span></div>
+    </div>
+    <p style="margin-top:6px"><b>如果身边有人：</b>白天不可控地睡着 · 笑着笑着身体发软 · 醒来几分钟动不了——建议去<b>神经内科 / 睡眠医学中心</b>。</p>
+    <p><b>你能做的：</b>别拍视频，别起哄，别使劲摇醒。问一句：「需要帮忙吗？」</p>
+    <button class="btn primary" id="againBtn">重过这一天</button>
+    <p class="src">数据来源：人民网健康 2026-03 · 央广网 2026-09-24（西安市人民医院睡眠中心）<br>本页所有症状片段均为简化模拟，真实频率与强度因人而异。</p>
+  </section>
+
+</main>
+
+<button id="skip">跳过这一天 →</button>
+<div id="veil"></div>
+<div id="lids" aria-hidden="true">
+  <div class="lid lidTop"></div>
+  <div class="lid lidBot"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)};
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ========== 可替换配置：随便改成你们班真笑得起来的 ========== */
+var JOKE_SETUP='老师把辅助线画错了半厘米，画完自己盯着看了两秒。';
+var JOKE_PUNCH='她开口了：「……好，我们假装刚才那步是对的。」';
+
+/* ========== 章节切换 ========== */
+var chs=[].slice.call(document.querySelectorAll('.ch'));
+var cur=0;
+function go(n){
+  chs[cur].classList.remove('on');
+  cur=n;
+  chs[n].classList.add('on');
+  scrollTo(0,0);
+  $('#skip').style.display = (n>=chs.length-1)?'none':'';
+}
+$('#skip').addEventListener('click',function(){ go(chs.length-1); });
+$('#startBtn').addEventListener('click',function(){ go(1); });
+$('#againBtn').addEventListener('click',function(){ location.reload(); });
+
+/* 所有「继续」按钮统一接线：nextN → 第 N+1 幕 */
+[['next1',2],['next2',3],['next3',4],['next4',5],['next5',6],['next6',7],['next7',8]]
+  .forEach(function(p){
+    var el=document.getElementById(p[0]);
+    if(el) el.addEventListener('click',function(){ go(p[1]); });
+  });
+
+/* ========== 01 起床：三次假醒（眼缝开合） ========== */
+var wakeTry=0;
+var eye=$('#eye'), roomTxt=$('#roomTxt');
+function setEye(open){
+  // 第三次真正全开：椭圆纵向半径超过 50%，画面不再是一条缝，而是完整的天花板 + 墙
+  var ry = 1.5 + open*55;
+  eye.style.clipPath='ellipse(82% '+ry.toFixed(1)+'% at 50% 46%)';
+  eye.style.filter='blur('+(20-open*18).toFixed(1)+'px) brightness('+(0.26+open*0.74).toFixed(2)+')';
+}
+setEye(0);
+$('#wakeBtn').addEventListener('click',function(){
+  wakeTry++;
+  var btn=this;
+  if(wakeTry===1){
+    setEye(0.5);
+    roomTxt.textContent='（有光。是自己房间的天花板。）';
+    setTimeout(function(){
+      setEye(0);
+      roomTxt.textContent='（手一撑，又沉回去了。）';
+      btn.textContent='再试一次';
+    },1200);
+  }else if(wakeTry===2){
+    setEye(0.72);
+    roomTxt.textContent='（这次是真的醒了——大概。）';
+    setTimeout(function(){
+      setEye(0);
+      roomTxt.textContent='（又睡回去了。闹钟还在响。）';
+      btn.textContent='第三次';
+    },1400);
+  }else{
+    setEye(1);
+    roomTxt.textContent='（醒了。这次是真的。）';
+    btn.hidden=true;
+    $('#wakeDone').hidden=false;
+    $('#next1').hidden=false;
+  }
+});
+
+/* 起床框里的视频：把 mp4 放到 assets/day-open.mp4 就会自动生效；
+   没有文件或格式不支持时，自动退回原来的文字版 */
+(function(){
+  var v=$('#wakeVid'), box=$('#room');
+  if(!v) return;
+  v.addEventListener('loadeddata',function(){
+    box.classList.add('hasvid');
+    var p=v.play(); if(p && p.catch) p.catch(function(){});
+  });
+  v.addEventListener('error',function(){
+    box.classList.remove('hasvid');
+    v.remove();
+  });
+  v.src='assets/day-open.mp4';
+})();
+
+/* ========== 02 早读：微睡眠（字掉光 → 整页黑 → 睁眼） ========== */
+var passage=$('#passage'), lids=$('#lids'), readTimers=[];
+var ptext=passage.textContent;
+var pchars=[];
+(function buildChars(){
+  passage.textContent='';
+  for(var i=0;i<ptext.length;i++){
+    var s=document.createElement('span');
+    s.className='c';
+    s.textContent=ptext[i]===' '?'\u00A0':ptext[i];
+    passage.appendChild(s);
+    pchars.push(s);
+  }
+})();
+
+function lidClose(){ lids.classList.add('closed'); }
+function lidOpen(){ lids.classList.remove('closed'); }
+
+$('#readBtn').addEventListener('click',function(){
+  this.hidden=true;
+  passage.classList.add('show');
+
+  if(reduce){                               // 减弱动画：直接清空 → 简短黑场 → 恢复
+    readTimers.push(setTimeout(function(){ clearWords(); passage.classList.add('blank'); },2200));
+    readTimers.push(setTimeout(lidClose,2600));
+    readTimers.push(setTimeout(lidOpen,4200));
+    readTimers.push(setTimeout(function(){ restoreWords(); askQ2(); },4400));
+    return;
+  }
+
+  // 读到一半，字开始一个一个掉出去
+  readTimers.push(setTimeout(function(){
+    var idx=[];
+    for(var i=0;i<pchars.length;i++) idx.push(i);
+    idx.sort(function(){ return Math.random()-0.5; });
+    idx.forEach(function(k,n){
+      readTimers.push(setTimeout(function(){ pchars[k].classList.add('gone'); }, n*34));
+    });
+  },4200));
+
+  // 全空 → 框也退掉 → 眼皮合上
+  readTimers.push(setTimeout(function(){
+    passage.classList.add('blank');
+  },6700));
+  readTimers.push(setTimeout(lidClose,7200));
+
+  // 整页黑 3 秒
+  readTimers.push(setTimeout(lidOpen,10300));
+
+  // 睁开眼，课文又回来了
+  readTimers.push(setTimeout(function(){
+    passage.classList.remove('blank');
+    restoreWords();
+    askQ2();
+  },11100));
+});
+
+function clearWords(){
+  pchars.forEach(function(s){ s.classList.add('gone'); });
+}
+function restoreWords(){
+  pchars.forEach(function(s,n){
+    if(reduce){ s.classList.remove('gone'); return; }
+    readTimers.push(setTimeout(function(){ s.classList.remove('gone'); }, n*12));
+  });
+}
+function askQ2(){
+  $('#q2').hidden=false;
+}
+function q2ans(text){
+  $('#q2note').innerHTML=text;
+  $('#q2note').hidden=false;
+  $('#next2').hidden=false;
+}
+$('#q2a').addEventListener('click',function(){
+  q2ans('你的眼睛一直睁着，嘴可能还在动——但这几秒，<b>一个字也没进脑子</b>。这叫<b>微睡眠</b>：大脑关机几秒，人还坐着，笔还在手里。');
+});
+$('#q2b').addEventListener('click',function(){
+  q2ans('对。连「不记得」本身，就是症状。眼睛睁着，人坐着，<b>大脑关机了</b>。这叫<b>微睡眠</b>。');
+});
+
+/* ========== 03 数学课：猝倒（抖动 → 裂缝 → 裂开） ========== */
+var laughed=false;
+$('#jokeSetup').textContent=JOKE_SETUP;
+$('#laughBtn').addEventListener('click',function(){
+  if(laughed) return; laughed=true;
+  this.hidden=true;
+  var box=$('#jokeBox'), txt=$('#jokeTxt'), veil=$('#veil');
+  txt.innerHTML=JOKE_PUNCH;
+
+  function wakeUp(){
+    txt.innerHTML='等你回过神——<br>全班的脸都朝着你。<br><b>同桌小声问：你刚才怎么滑下去了？</b>';
+    $('#catDone').hidden=false; $('#next3').hidden=false;
+  }
+
+  setTimeout(function(){
+    if(reduce){
+      veil.classList.add('half');
+      setTimeout(function(){ veil.classList.remove('half'); wakeUp(); },700);
+      return;
+    }
+
+    /* 1. 剧烈抖动 */
+    $('#page').classList.add('quake');
+
+    setTimeout(function(){
+      $('#page').classList.remove('quake');
+
+      /* 2. 从卡片正中画一条裂缝（自上而下劈开） */
+      var r=box.getBoundingClientRect();
+      var crack=document.createElement('div');
+      crack.className='crack';
+      crack.style.left=(r.left+r.width/2-6)+'px';
+      crack.style.top=r.top+'px';
+      crack.style.height=r.height+'px';
+      crack.innerHTML='<svg viewBox="0 0 12 100" preserveAspectRatio="none">'+
+        '<path pathLength="100" d="M6 0 L3 11 L8 22 L4 34 L9 46 L3 58 L8 70 L4 82 L7 92 L5 100" '+
+        'fill="none" stroke="#241A20" stroke-width="2.6" stroke-linecap="round"/></svg>';
+      document.body.appendChild(crack);
+
+      /* 3. 裂成两半，朝两边滑落 */
+      setTimeout(function(){
+        function half(side){
+          var c=box.cloneNode(true);
+          c.removeAttribute('id');
+          c.className='scene joke split '+(side==='l'?'splitL':'splitR');
+          c.style.position='fixed';
+          c.style.left=r.left+'px';
+          c.style.top=r.top+'px';
+          c.style.width=r.width+'px';
+          c.style.height=r.height+'px';
+          c.style.margin='0';
+          c.style.clipPath = side==='l' ? 'inset(0 50.4% 0 0)' : 'inset(0 0 0 50.4%)';
+          document.body.appendChild(c);
+          return c;
+        }
+        var L=half('l'), R=half('r');
+        box.style.visibility='hidden';
+        veil.classList.add('quarter');
+        requestAnimationFrame(function(){ L.classList.add('go'); R.classList.add('go'); });
+        crack.classList.add('fade');
+
+        setTimeout(function(){
+          L.remove(); R.remove(); crack.remove();
+          box.style.visibility='';
+          veil.classList.remove('quarter');
+          wakeUp();
+        },1250);
+      },300);
+    },600);
+  },2200);
+});
+
+/* ========== 05 自习：自动行为（卡 → 黑 2.1 秒 → 手自己写了半页） ========== */
+var fired5=false, composing=false, lenAtBlack=0, ghostTimer=null;
+/* 黑屏里手自己写下去的内容：整句重抄一遍，然后开始写跟作业不相干的话，最后断在半句 */
+var GHOST5='1840 年鸦片战争，打开了中国近代史的大门。还没下课吗还没下课吗还没下';
+var ta=$('#copyTa');
+ta.addEventListener('compositionstart',function(){ composing=true; });
+ta.addEventListener('compositionend',function(){
+  composing=false;
+  check5();
+});
+ta.addEventListener('input',function(){ if(!composing) check5(); });
+function check5(){
+  if(fired5) return;
+  if(ta.value.replace(/\s/g,'').length>=10) fire5();
+}
+function fire5(){
+  fired5=true;
+  var page=$('#page'), veil=$('#veil');
+  lenAtBlack=ta.value.length;
+  if(!reduce){ page.classList.add('stutter'); }
+  setTimeout(function(){ page.classList.remove('stutter'); },520);
+  setTimeout(function(){
+    veil.classList.add('full');           /* 彻底睡着：全屏黑 2.1 秒，输入没锁 */
+    /* 黑屏里，手没停：一个字一个字往上加，屏幕全黑，你看不见 */
+    var i=0;
+    setTimeout(function tick(){
+      if(i>=GHOST5.length) return;
+      ta.value+=GHOST5.charAt(i++);
+      ta.scrollTop=ta.scrollHeight;
+      ghostTimer=setTimeout(tick,40);
+    },150);
+    setTimeout(function(){
+      if(ghostTimer){ clearTimeout(ghostTimer); ghostTimer=null; }
+      veil.classList.remove('full');
+      showCmp5();
+    },2100);
+  },560);
+}
+function showCmp5(){
+  var full=ta.value;
+  var before=full.slice(0,lenAtBlack);
+  var ghost=full.slice(lenAtBlack);
+  if(!ghost.trim()){ before=full; ghost=GHOST5; }          /* 兜底 */
+  $('#cmpA').textContent = before.trim()||'（空的）';
+  $('#cmpB').innerHTML=escapeHtml(before)+'<span class="ghost">'+escapeHtml(ghost.trim())+'</span>';
+  $('#cmpNote').innerHTML =
+    '<b>红框里的字，你没有印象。</b>那两秒你的手没停——它接着把同一句又抄了一遍，'+
+    '然后开始写不相干的话，最后一个字停在「还没下」。<br><br>'+
+    '这不叫走神，叫<b>自动行为</b>：人在写字、走路、说话，事后完全没有记忆。';
+  $('#cmp5').hidden=false;
+  ta.readOnly=true;
+  ta.classList.add('flash');
+  /* 让本子整页摊开，别把上面那几行切成半截 */
+  ta.style.height='auto';
+  ta.style.height=(ta.scrollHeight+2)+'px';
+  ta.scrollTop=0;
+  $('#next5').hidden=false;
+}
+function escapeHtml(s){
+  return s.replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+  });
+}
+
+/* ========== 06 放学：选择 ========== */
+function rideAnswer(choseRide){
+  $('#choice6').hidden=true;
+  var n=$('#rideDone');
+  n.innerHTML=(choseRide
+    ? '上一回，你骑到小区门口就眯过去了，车摔了，膝盖的疤现在还在。<br>车锁进架子，你换成了走。'
+    : '你推着车走。熟练得让人心疼——这条路线你已经走了两年。')
+    + '<br><br><b>发作性睡病患者发生交通事故的风险约为常人 6.7 倍</b>。大多数患者是自己先放弃骑车的——在任何人开口要求之前。';
+  n.hidden=false;
+  $('#next6').hidden=false;
+}
+$('#rideBtn').addEventListener('click',function(){ rideAnswer(true); });
+$('#walkBtn').addEventListener('click',function(){ rideAnswer(false); });
+
+/* ========== 07 夜里：越努力，越睡不着 ========== */
+var NIGHT=[
+  {btn:'好困啊，去睡觉',        wake:'我怎么醒了。',           t:'00:47', lab:'第 1 次夜醒'},
+  {btn:'继续睡……',             wake:'……睡不着。',             t:'02:13', lab:'第 2 次夜醒'},
+  {btn:'闭眼，什么都别想',      wake:'怎么又醒了？真的好困。',   t:'03:40', lab:'第 3 次夜醒'},
+  {btn:'真的求求了……我要睡觉', wake:'闹钟响了。',             t:'06:20', lab:'第 4 次夜醒'}
+];
+var nightStep=0;
+(function(){
+  var bar=$('#sleepbar');
+  for(var i=0;i<8;i++){
+    var seg=document.createElement('i');
+    seg.className=(i%2===0)?'deep':'wake';
+    bar.appendChild(seg);
+  }
+})();
+function lightSegs(n){
+  var segs=document.querySelectorAll('#sleepbar i');
+  for(var i=0;i<n && i<segs.length;i++) segs[i].classList.add('on');
+}
+$('#sleepBtn').addEventListener('click',function(){
+  var btn=this;
+  btn.disabled=true;
+  var veil=$('#veil');
+  var isLast=(nightStep===NIGHT.length-1);
+  veil.classList.add('full');
+  setTimeout(function(){
+    veil.classList.remove('full');
+    var s=NIGHT[nightStep];
+    $('#nightTime').textContent=s.t;
+    $('#nightSay').textContent=s.wake;
+    $('#sleepLab').textContent=isLast?'一夜 7 次夜醒 · 06:20 闹钟':s.lab;
+    lightSegs(isLast?8:(nightStep+1)*2);
+    nightStep++;
+    if(isLast){
+      btn.hidden=true;
+      $('#nightEnd').hidden=false;
+    }else{
+      btn.textContent=NIGHT[nightStep].btn;
+      btn.disabled=false;
+    }
+  }, isLast?2000:1500);
+});
+
+/* ?ch=N 直接跳到第 N 章（调试 / 复查用） */
+var m=location.search.match(/[?&]ch=(\d)/);
+if(m){ go(Math.min(+m[1],chs.length-1)); }
+})();
+</script>
+</body>
+</html>
